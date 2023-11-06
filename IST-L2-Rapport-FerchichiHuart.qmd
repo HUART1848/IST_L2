@@ -1,0 +1,12 @@
+# IST - LAB 02 : Object Storage (Amazon S3)
+
+**Farouk Ferchichi & Hugo Huart**
+
+## Task 1: Use the web console to create an S3 bucket and upload and download objects (files)
+
+### _Create a new bucket. Choose a name for the bucket following the lab naming convention._
+
+A bucket was created with the name `ist-grh-ferchichi-huart`
+
+## Task 2 : Use the AWS Command-Line Interface to manage buckets and objects
+
