@@ -1,0 +1,212 @@
+---
+title: "IST - LAB 03 : Object Storage (Amazon S3)"
+author: "Farouk Ferchichi & Hugo Huart"
+format:
+    pdf:
+        geometry:
+            margin=1.5cm
+---
+
+# IST - LAB 03 : Object Storage (Amazon S3)
+
+**Farouk Ferchichi & Hugo Huart**
+
+## Task 1: Use the web console to create an S3 bucket and upload and download objects (files)
+
+### _Create a new bucket. Choose a name for the bucket following the lab naming convention._
+
+A bucket was created with the name `ist-grh-ferchichi-huart`.
+
+### _To verify that it was uploaded successfully, we will do an SQL query on the file, and at the same time learn that S3 has a buil-in SQL engine that works directly on CSV files_
+
+First, the file was read succesfully with the default SQL query `SELECT * FROM s3object s LIMIT 5`.
+
+With the query `SELECT count(*) FROM s3object s` the output was `5`.
+
+## Task 2 : Use the AWS Command-Line Interface to manage buckets and objects
+
+### _Verify that the tool is configured correctly_
+
+All available regions:
+
+```
+REGIONS ec2.ap-south-1.amazonaws.com    opt-in-not-required     ap-south-1
+REGIONS ec2.eu-north-1.amazonaws.com    opt-in-not-required     eu-north-1
+REGIONS ec2.eu-west-3.amazonaws.com     opt-in-not-required     eu-west-3
+REGIONS ec2.eu-west-2.amazonaws.com     opt-in-not-required     eu-west-2
+REGIONS ec2.eu-west-1.amazonaws.com     opt-in-not-required     eu-west-1
+REGIONS ec2.ap-northeast-3.amazonaws.com        opt-in-not-required     ap-northeast-3
+REGIONS ec2.ap-northeast-2.amazonaws.com        opt-in-not-required     ap-northeast-2
+REGIONS ec2.ap-northeast-1.amazonaws.com        opt-in-not-required     ap-northeast-1
+REGIONS ec2.ca-central-1.amazonaws.com  opt-in-not-required     ca-central-1
+REGIONS ec2.sa-east-1.amazonaws.com     opt-in-not-required     sa-east-1
+REGIONS ec2.ap-southeast-1.amazonaws.com        opt-in-not-required     ap-southeast-1
+REGIONS ec2.ap-southeast-2.amazonaws.com        opt-in-not-required     ap-southeast-2
+REGIONS ec2.eu-central-1.amazonaws.com  opt-in-not-required     eu-central-1
+REGIONS ec2.us-east-1.amazonaws.com     opt-in-not-required     us-east-1
+REGIONS ec2.us-east-2.amazonaws.com     opt-in-not-required     us-east-2
+REGIONS ec2.us-west-1.amazonaws.com     opt-in-not-required     us-west-1
+REGIONS ec2.us-west-2.amazonaws.com     opt-in-not-required     us-west-2
+```
+
+Account attributes:
+
+```
+ACCOUNTATTRIBUTES       supported-platforms
+ATTRIBUTEVALUES VPC
+ACCOUNTATTRIBUTES       vpc-max-security-groups-per-interface
+ATTRIBUTEVALUES 5
+ACCOUNTATTRIBUTES       max-elastic-ips
+ATTRIBUTEVALUES 5
+ACCOUNTATTRIBUTES       max-instances
+ATTRIBUTEVALUES 20
+ACCOUNTATTRIBUTES       vpc-max-elastic-ips
+ATTRIBUTEVALUES 20
+ACCOUNTATTRIBUTES       default-vpc
+ATTRIBUTEVALUES vpc-04d7055d4dd0b93d2
+```
+
+Available EC2 instances types:
+
+```
+INSTANCETYPEOFFERINGS	m6i.8xlarge	us-east-1	region
+INSTANCETYPEOFFERINGS	m6in.4xlarge	us-east-1	region
+INSTANCETYPEOFFERINGS	c7a.metal-48xl	us-east-1	region
+INSTANCETYPEOFFERINGS	c6id.large	us-east-1	region
+INSTANCETYPEOFFERINGS	r4.16xlarge	us-east-1	region
+INSTANCETYPEOFFERINGS	r7a.metal-48xl	us-east-1	region
+INSTANCETYPEOFFERINGS	c5n.metal	us-east-1	region
+INSTANCETYPEOFFERINGS	c7a.4xlarge	us-east-1	region
+INSTANCETYPEOFFERINGS	a1.xlarge	us-east-1	region
+INSTANCETYPEOFFERINGS	m6i.2xlarge	us-east-1	region
+INSTANCETYPEOFFERINGS	t3a.medium	us-east-1	region
+INSTANCETYPEOFFERINGS	r7iz.8xlarge	us-east-1	region
+INSTANCETYPEOFFERINGS	m6a.48xlarge	us-east-1	region
+INSTANCETYPEOFFERINGS	x2idn.32xlarge	us-east-1	region
+INSTANCETYPEOFFERINGS	c7i.16xlarge	us-east-1	region
+[truncated]
+```
+
+\pagebreak
+S3 buckets in the account:
+
+```
+2022-02-19 11:41:28 aws-cloudtrail-logs-058258612171-1871bacf
+2022-10-31 10:17:21 bucket1-b83c83db-644f-4506-8152-783621c47980
+2022-10-31 10:18:14 bucket2-cd834d37-7b45-475e-998a-63dc8a5a4020
+2022-10-31 10:18:34 bucket3-cd668ce6-4839-4823-98df-be312db0038c
+2023-06-01 17:23:55 custom-labels-console-us-east-1-6aa67c663d
+2022-10-06 15:13:32 heigvd-ist
+2022-11-24 10:37:02 heigvd-ist-gra
+2022-11-10 13:53:32 heigvd-ist-grb
+2022-11-24 08:45:31 heigvd-ist-lab5-grc
+2023-10-20 13:04:51 heigvd-ist-rms
+2023-11-01 10:39:03 ist-gra-ernst-bucket
+2023-11-01 11:00:46 ist-gra-ernst-bucketcli
+2023-11-01 10:41:40 ist-grb-centeno-merk-bucket
+2023-11-01 11:06:04 ist-grb-centeno-merk-bucket2
+2023-11-01 11:03:08 ist-grc-rausis-bucket
+2023-11-01 10:29:56 ist-grc-reymermet-bucket
+2023-11-01 10:43:26 ist-grd-urizar-valzino-bucket
+2023-11-01 11:19:09 ist-grd-urizar-valzino-bucket-cli
+2023-11-01 10:45:27 ist-gre-amos-rosat-bucket
+2023-11-01 11:01:21 ist-gre-amos-rosat-bucket-cmd
+2023-11-01 10:39:39 ist-grf-conti-bucket
+2023-11-01 11:31:30 ist-grf-conti-bucket2
+2023-11-01 10:43:35 ist-grf-gogniat-bucket1
+2023-11-01 11:30:06 ist-grf-gogniat-bucket2
+2023-11-06 17:29:58 ist-grh-ferchichi-huart
+2023-11-01 10:40:00 ist-gri-decoppet-bucket1
+2023-11-01 11:11:54 ist-gri-decoppet-bucket2
+2023-11-01 10:41:34 ist-gri-lopesgouveia-bucket
+```
+
+### _Manipulate buckets and objects. Use the documentation Using high-level (S3) commands with the AWS CLI as a reference_
+
+A bucket named `ist-grh-ferchichi-huart-cli`
+is created with the command:
+
+```bash
+aws s3 mb s3://ist-grh-ferchichi-huart-cli
+```
+
+The file is added to the bucket with the command:
+
+```bash
+aws s3 cp lab.csv s3://ist-grh-ferchichi-huart-cli
+```
+
+The content of the bucket is listed with `aws s3 ls s3://ist-grh-ferchichi-huart-cli`, with output:
+
+```
+2023-11-07 10:28:16        332 lab.csv
+```
+
+The file is copied on the bucket with command:
+
+```bash
+aws s3 cp s3://ist-grh-ferchichi-huart-cli/lab.csv s3://ist-grh-ferchichi-huart-cli/lab2.csv
+```
+
+Finally, the new file is deleted with the command:
+
+```bash
+aws s3 rm s3://ist-grh-ferchichi-huart-cli/lab2.csv`
+```
+
+### _S3 folders behave differently from file system folders. In fact a folder in S3 is a 0-byte object whose name ends with a slash (/). Read the introduction on the page_
+
+If we try to copy an object into a non-existing folder, it is automatically created by AWS.
+
+## Task 3: Create a static web site
+
+### _On which URL is your new website reachable?_
+
+The website URL is [http://ist-grh-ferchichi-huart.s3-website-us-east-1.amazonaws.com/](http://ist-grh-ferchichi-huart.s3-website-us-east-1.amazonaws.com/).
+
+## Task 4: Explore a public bucket with a large dataset
+
+### _The data location of the Common Crawl datasets is described on the page Get Started. When was the latest crawl? What is the bucket name? Under which prefix is the latest crawl stored?_
+
+According to [https://data.commoncrawl.org/crawl-data/CC-MAIN-2023-40/index.html](https://data.commoncrawl.org/crawl-data/CC-MAIN-2023-40/index.html) the latest crawl was done in September/October 2023.
+
+The bucket name is `commoncrawl`. The prefix of the latest crawl is `crawl-data/CC-MAIN-2023-40/`.
+
+### _Navigate to the root folder of the latest crawl. Click on the object index.html. Click the Open button to load it into your browser. What is the URL of this object?_
+
+The URL is [https://commoncrawl.s3.amazonaws.com/crawl-data/CC-MAIN-2023-40/index.html](https://commoncrawl.s3.amazonaws.com/crawl-data/CC-MAIN-2023-40/index.html). At this time the access is rate limited and the
+URL returns the following error:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Error>
+<Code>SlowDown</Code>
+<Message>Please reduce your request rate.</Message>
+<RequestId>NBP2MYCWCNPM33YT</RequestId>
+<HostId>TQIi8m3sDnbe94RADpUkIJP+Oy0mPbr9wW/3EeW3I6FOKgtRF+37l2mHd3ZZWdVbla1C7MCQy8Q=</HostId>
+</Error>
+```
+
+However it is accessible with the URL [https://data.commoncrawl.org/crawl-data/CC-MAIN-2023-40/index.html](https://data.commoncrawl.org/crawl-data/CC-MAIN-2023-40/index.html).
+
+### _What are WARC, WAT and WET files (look at the Get Started guide)?_
+
+WARC files contains raw data from the crawl, with the raw HTTP response of a page and other
+informations about the request.
+
+WAT files contain metadata about the WARC files, including HTTP response metadatas.
+
+WET files contains the plain text data of a page (stripped of its HTML elements).
+
+### _What is the typical size of a WARC file (ballpark)?_
+
+Around 1GB for a gz-compressed single file.
+
+### _Why is it not sufficient to just store the WARC, WAT and WET files in the bucket? What other type of file is needed?_
+
+Because of the huge number of subfolders and files, each WARC, WAT or WET filepath is stored
+in a {WARC,WAT,WEC}.paths file so that they can accessed more easily by a script.
+
+### _What storage classes have the Common Crawl developers chosen to store the data?_
+
+The main crawl files are stored with the _Intelligent-Tiering_ class.

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-quarto render IST-L2-Rapport-FerchichiHuart.qmd --to pdf
+quarto render IST-L3-Rapport-FerchichiHuart.qmd --to pdf
